@@ -7,6 +7,8 @@ const lightColor = Color(0XFFEDEDE9);
 const biru = Color(0XFF38A9E1);
 const abu = Color(0XFF8B8B8B);
 const pink = Color(0XFFB44CC7);
+const black = Colors.black;
+const white = Colors.white;
 
 /// SCROLL PYHSICS
 const bouncing = BouncingScrollPhysics();

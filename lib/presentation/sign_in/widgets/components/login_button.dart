@@ -6,11 +6,12 @@ class LoginButton extends StatelessWidget {
   const LoginButton({
     Key? key,
     this.onTap,
-    this.tittle = 'LOGIN',
+    this.isRegister = false,
   }) : super(key: key);
 
   final Function()? onTap;
-  final String tittle;
+
+  final bool isRegister;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class LoginButton extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            tittle,
+            isRegister ? 'REGISTER' : 'LOGIN',
             style: const TextStyle(
               color: darkColor,
               fontFamily: ubuntu,

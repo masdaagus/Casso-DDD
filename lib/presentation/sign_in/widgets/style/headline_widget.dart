@@ -10,7 +10,7 @@ class HeadlineWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.only(top: 24, bottom: 32),
+      padding: EdgeInsets.only(top: dPadding * 3, bottom: 32),
       child: Text(
         "Casso",
         style: TextStyle(

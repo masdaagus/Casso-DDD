@@ -10,20 +10,17 @@ class SignInForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-      child: Stack(
-        children: [
-          PictureWidget(),
-          CircleWidget1(),
-          CircleWidget2(),
-          CircleWidget3(),
-          BlocProvider(
-            create: (context) => getIt<SignInFormBloc>(),
-            child: SignInFormWidget(),
-          ),
-        ],
-      ),
+    return Stack(
+      children: [
+        PictureWidget(),
+        CircleWidget1(),
+        CircleWidget2(),
+        CircleWidget3(),
+        BlocProvider(
+          create: (context) => getIt<SignInFormBloc>(),
+          child: SignInFormWidget(),
+        ),
+      ],
     );
   }
 }

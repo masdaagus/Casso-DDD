@@ -1,11 +1,12 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'dart:developer';
+
 import 'package:casso/domain/auth/auth_failure.dart';
 import 'package:casso/domain/auth/i_auth_facade.dart';
 import 'package:dartz/dartz.dart';
 import 'package:casso/domain/auth/value_objects.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 
@@ -29,8 +30,10 @@ class FirebaseAuthFacade implements IAuthFacade {
         password: passwordStr,
       );
       return right(unit);
-    } on PlatformException catch (e) {
-      if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
+    } on FirebaseAuthException catch (e) {
+      log("error kenapa ini ${e.code}");
+      // return left(const AuthFailure.emailAlreadyInUse());
+      if (e.code == 'email-already-in-use') {
         return left(const AuthFailure.emailAlreadyInUse());
       } else {
         return left(const AuthFailure.serverError());
@@ -52,9 +55,11 @@ class FirebaseAuthFacade implements IAuthFacade {
         password: passwordStr,
       );
       return right(unit);
-    } on PlatformException catch (e) {
-      if (e.code == 'ERROR_WRONG_PASSWORD' ||
-          e.code == 'ERROR_USER_NOT_FOUND') {
+    } on FirebaseAuthException catch (e) {
+      log("code nya adalah = ${e.code}");
+      if (e.code == 'wrong-password' ||
+          e.code == 'user-not-found' ||
+          e.code == 'invalid-email') {
         return left(const AuthFailure.invalidEmailAndPassword());
       } else {
         return left(const AuthFailure.serverError());
@@ -67,6 +72,7 @@ class FirebaseAuthFacade implements IAuthFacade {
     try {
       final googleUser = await _googleSignIn.signIn();
       if (googleUser == null) {
+        log('cancel by user');
         return left(const AuthFailure.cancelByUser());
       }
       final googleAutentification = await googleUser.authentication;
