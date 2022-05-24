@@ -1,4 +1,8 @@
 {
-    "editor.fontSize":14,
+    "editor.fontSize":16,
     "window.zoomLevel": 0.2,
+    "files.exclude": {
+        "**/*.freezed.dart": true,
+        "**/*.g.dart": true
+    },
 }
