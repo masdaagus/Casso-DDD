@@ -1,6 +1,10 @@
 import 'package:casso/presentation/core/constant.dart';
-import 'package:casso/presentation/sign_in/sign_in_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../aplication/auth/auth_bloc.dart';
+import '../../injection.dart';
+import '../splash/splash_page.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({Key? key}) : super(key: key);
@@ -10,7 +14,15 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Casso',
-      home: SignInPage(),
+      // routerDelegate: _appRouter.delegate(),
+      // routeInformationParser: _appRouter.defaultRouteParser(),
+
+      home: BlocProvider(
+        create: (context) =>
+            getIt<AuthBloc>()..add(const AuthEvent.authCheckRequested()),
+        child: SplassPage(),
+      ),
+
       theme: ThemeData(
         primaryColor: lightColor,
         backgroundColor: lightColor,

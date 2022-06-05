@@ -867,7 +867,7 @@ mixin _$SignInFormState {
   Password get password => throw _privateConstructorUsedError;
   bool get showErrorMessages => throw _privateConstructorUsedError;
   bool get isSubmitting => throw _privateConstructorUsedError;
-  Option<Either<AuthFailure, Unit>> get authFailureOrSuccessOption =>
+  Option<Either<AuthFailure, UserModel>> get authFailureOrSuccessOption =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -885,7 +885,7 @@ abstract class $SignInFormStateCopyWith<$Res> {
       Password password,
       bool showErrorMessages,
       bool isSubmitting,
-      Option<Either<AuthFailure, Unit>> authFailureOrSuccessOption});
+      Option<Either<AuthFailure, UserModel>> authFailureOrSuccessOption});
 }
 
 /// @nodoc
@@ -925,7 +925,7 @@ class _$SignInFormStateCopyWithImpl<$Res>
       authFailureOrSuccessOption: authFailureOrSuccessOption == freezed
           ? _value.authFailureOrSuccessOption
           : authFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
-              as Option<Either<AuthFailure, Unit>>,
+              as Option<Either<AuthFailure, UserModel>>,
     ));
   }
 }
@@ -942,7 +942,7 @@ abstract class _$$_SignInFormStateCopyWith<$Res>
       Password password,
       bool showErrorMessages,
       bool isSubmitting,
-      Option<Either<AuthFailure, Unit>> authFailureOrSuccessOption});
+      Option<Either<AuthFailure, UserModel>> authFailureOrSuccessOption});
 }
 
 /// @nodoc
@@ -984,7 +984,7 @@ class __$$_SignInFormStateCopyWithImpl<$Res>
       authFailureOrSuccessOption: authFailureOrSuccessOption == freezed
           ? _value.authFailureOrSuccessOption
           : authFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
-              as Option<Either<AuthFailure, Unit>>,
+              as Option<Either<AuthFailure, UserModel>>,
     ));
   }
 }
@@ -1010,7 +1010,7 @@ class _$_SignInFormState
   @override
   final bool isSubmitting;
   @override
-  final Option<Either<AuthFailure, Unit>> authFailureOrSuccessOption;
+  final Option<Either<AuthFailure, UserModel>> authFailureOrSuccessOption;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -1067,7 +1067,7 @@ abstract class _SignInFormState implements SignInFormState {
       required final Password password,
       required final bool showErrorMessages,
       required final bool isSubmitting,
-      required final Option<Either<AuthFailure, Unit>>
+      required final Option<Either<AuthFailure, UserModel>>
           authFailureOrSuccessOption}) = _$_SignInFormState;
 
   @override
@@ -1079,7 +1079,7 @@ abstract class _SignInFormState implements SignInFormState {
   @override
   bool get isSubmitting => throw _privateConstructorUsedError;
   @override
-  Option<Either<AuthFailure, Unit>> get authFailureOrSuccessOption =>
+  Option<Either<AuthFailure, UserModel>> get authFailureOrSuccessOption =>
       throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

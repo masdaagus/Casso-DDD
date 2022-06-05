@@ -18,3 +18,11 @@ Either<ValueFailure<String>, String> validatePassword(String input) {
     return left(ValueFailure.shortPassword(failedValue: input));
   }
 }
+
+Either<ValueFailure<String>, String> validateRestoFields(String input) {
+  if (input.length >= 2) {
+    return right(input);
+  } else {
+    return left(ValueFailure.shortRestoFields(failedValue: input));
+  }
+}

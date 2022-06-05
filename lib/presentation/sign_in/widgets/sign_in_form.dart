@@ -20,6 +20,7 @@ class SignInForm extends StatelessWidget {
           create: (context) => getIt<SignInFormBloc>(),
           child: SignInFormWidget(),
         ),
+        // Center(child: CircularProgressIndicator())
       ],
     );
   }

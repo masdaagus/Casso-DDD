@@ -31,3 +31,16 @@ class Password extends ValueObject<String> {
 
   const Password._(this.value);
 }
+
+class RestoFields extends ValueObject<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  factory RestoFields(String input) {
+    return RestoFields._(
+      validateRestoFields(input),
+    );
+  }
+
+  const RestoFields._(this.value);
+}

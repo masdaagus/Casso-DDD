@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:casso/domain/auth/auth_failure.dart';
 import 'package:casso/domain/auth/i_auth_facade.dart';
+import 'package:casso/domain/auth/user.dart';
 import 'package:casso/domain/auth/value_objects.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
@@ -21,61 +20,47 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
     on<SignInFormEvent>((event, emit) async {
       await event.map(
         emailChanged: (e) {
-          final emailState = state.copyWith(
+          final ns = state.copyWith(
             emailAddress: EmailAddress(e.email),
             authFailureOrSuccessOption: none(),
           );
-          emit(emailState);
+          emit(ns);
         },
         passwordChanged: (e) {
-          final passwordState = state.copyWith(
+          final ns = state.copyWith(
             password: Password(e.password),
             authFailureOrSuccessOption: none(),
           );
-
-          emit(passwordState);
+          emit(ns);
         },
         registerWithEmailAndPassword: (e) async {
           final isEmailValid = state.emailAddress.isValid();
           final isPasswordValid = state.password.isValid();
 
           if (isPasswordValid && isEmailValid) {
-            state.copyWith(
-              isSubmitting: true,
-              authFailureOrSuccessOption: none(),
-            );
+            emit(state.copyWith(isSubmitting: true));
 
             await _authFacade
                 .registerEmailAndPassword(
                   emailAddress: state.emailAddress,
                   password: state.password,
                 )
-                .then(
-                  (value) => emit(
-                    state.copyWith(
+                .then((value) => emit(state.copyWith(
                       isSubmitting: false,
                       showErrorMessages: true,
                       authFailureOrSuccessOption: optionOf(value),
-                    ),
-                  ),
-                );
+                    )));
           }
-          // _performActionOnAuthFacadeWithEmailAndPassword(
-          //   _authFacade.registerEmailAndPassword,
-          // );
         },
         signInWithEmailAndPassword: (e) async {
           final isEmailValid = state.emailAddress.isValid();
           final isPasswordValid = state.password.isValid();
 
           if (isPasswordValid && isEmailValid) {
-            state.copyWith(
-              isSubmitting: true,
-              authFailureOrSuccessOption: none(),
-            );
+            emit(state.copyWith(isSubmitting: true));
 
             await _authFacade
-                .signEmailAndPassword(
+                .signInEmailAndPassword(
                   emailAddress: state.emailAddress,
                   password: state.password,
                 )
@@ -91,11 +76,7 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
           }
         },
         signInWithGooglePressed: (e) async {
-          final startState = state.copyWith(
-            isSubmitting: true,
-            authFailureOrSuccessOption: none(),
-          );
-          emit(startState);
+          emit(state.copyWith(isSubmitting: true));
 
           await _authFacade.signWithGoogle().then((value) {
             emit(state.copyWith(
@@ -107,36 +88,5 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
         },
       );
     });
-  }
-
-  Stream<SignInFormState> _performActionOnAuthFacadeWithEmailAndPassword(
-    Future<Either<AuthFailure, Unit>> Function({
-      required EmailAddress emailAddress,
-      required Password password,
-    })
-        forwadedCall,
-  ) async* {
-    Either<AuthFailure, Unit>? failureOrSucces;
-
-    final isEmailValid = state.emailAddress.isValid();
-    final isPasswordValid = state.password.isValid();
-
-    log('is password valid = $isPasswordValid');
-    if (isEmailValid && isPasswordValid) {
-      state.copyWith(
-        isSubmitting: true,
-        authFailureOrSuccessOption: none(),
-      );
-      forwadedCall(
-        emailAddress: state.emailAddress,
-        password: state.password,
-      );
-
-      state.copyWith(
-        isSubmitting: false,
-        showErrorMessages: true,
-        authFailureOrSuccessOption: optionOf(failureOrSucces),
-      );
-    }
   }
 }

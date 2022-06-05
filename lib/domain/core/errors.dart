@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:casso/domain/core/failures.dart';
 
+class NotAuthenticatedError extends Error {}
+
 class UnExpetedValueError extends Error {
   final ValueFailure valueFailure;
   UnExpetedValueError(this.valueFailure);
